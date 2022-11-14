@@ -8,22 +8,27 @@
 using namespace std;
 
 #define PACKET_SIZE 1024
-#define MAX 10
 
 WSADATA wsa;
-SOCKET skt, client_sock[MAX];
-SOCKADDR_IN client[MAX] = { 0 };
-int client_size[MAX];
+SOCKET skt, *client_sock;
+SOCKADDR_IN *client;
+int *client_size,MAX;
 
 
-
-void error(SOCKET skt) {
-	closesocket(skt);
+void error(SOCKET &s) {
+	closesocket(s);
 	WSACleanup();
 }
 
 void recvclient(SOCKET& s, int client_num) {
+	char buf[PACKET_SIZE];
 
+	while (true) {
+		ZeroMemory(buf, PACKET_SIZE);
+		if (recv(s, buf, PACKET_SIZE, 0) == -1) break;
+		cout << "\nClient # " << client_num << " : " << buf << "\n보낼 데이터 입력 : ";
+	}
+	return;
 }
 
 void acceptclient() {
@@ -31,8 +36,10 @@ void acceptclient() {
 	for (int i = 0; i < MAX; i++) {
 		client_size[i] = sizeof(client[i]);
 		client_sock[i] = accept(skt, (SOCKADDR*)&client[i], &client_size[i]);
+
 		if (client_sock[i] == INVALID_SOCKET) {
 			cout << "accept error" << endl;
+			closesocket(skt);
 			error(client_sock[i]);
 			return;
 		}
@@ -45,9 +52,11 @@ void acceptclient() {
 	}
 }
 
-
-int main() {
-	WSAStartup(MAKEWORD(2, 2), &wsa);
+void openSocket() {
+	if (WSAStartup(MAKEWORD(2, 2), &wsa)) {
+		cout << "WSA error" << endl;
+		return;
+	}
 
 	skt = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
 	if (skt == INVALID_SOCKET) {
@@ -75,6 +84,35 @@ int main() {
 
 	thread(acceptclient).detach();
 
-	while (1) {}
+	char msg[PACKET_SIZE];
+	while (true) {
+		cout << "보낼 메세지 입력 >> ";
+		cin >> msg;
+		
+		for (int i = 0; i < MAX; i++) {
+			send(client_sock[i], msg, strlen(msg), 0);
+		}
+	}
+	for (int i = 0; i < MAX; i++) closesocket(client_sock[i]);
+	closesocket(skt);
+	WSACleanup();
+	return;
+}
 
+int main() {
+	cout << "최대 클라이언트 수 : ";
+	cin >> MAX;
+
+	client_sock = new SOCKET[MAX];
+	client = new SOCKADDR_IN[MAX];
+	client_size = new int[MAX];
+
+	ZeroMemory(client_sock, sizeof(client_sock));
+	ZeroMemory(client, sizeof(client));
+	ZeroMemory(client_size, sizeof(client_size));
+
+	openSocket();
+
+	delete[] client_sock, client, client_size;
+	return 0;
 }
