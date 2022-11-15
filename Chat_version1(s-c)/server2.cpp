@@ -20,7 +20,7 @@
 //	WSACleanup();
 //}
 //
-//void recvclient(SOCKET& s, int client_num) {
+//void recvclient(SOCKET s, int client_num) {
 //	char buf[PACKET_SIZE];
 //
 //	while (true) {
@@ -48,7 +48,7 @@
 //		ZeroMemory(client_num, sizeof(client_num));
 //		_itoa_s(i, client_num, 10); //i의 정수값을 client_num에 10진수로 저장
 //		send(client_sock[i], client_num, strlen(client_num), 0);
-//		thread(recvclient, ref(client_sock[i]), i).detach();
+//		thread(recvclient, client_sock[i], i).detach();
 //	}
 //}
 //

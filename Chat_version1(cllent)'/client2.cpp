@@ -40,7 +40,7 @@
 //	addr.sin_port = htons(8888);
 //
 //	while (connect(skt, (SOCKADDR*)&addr, sizeof(addr)));
-//
+//	
 //	char buffer[PACKET_SIZE];
 //
 //	recv(skt, buffer, PACKET_SIZE, 0);

@@ -130,6 +130,7 @@
     <ClCompile Include="client.cpp" />
     <ClCompile Include="client2.cpp" />
     <ClCompile Include="client3.cpp" />
+    <ClCompile Include="clinet4.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
