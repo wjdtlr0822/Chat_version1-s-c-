@@ -10,7 +10,7 @@ using namespace std;
 
 void error_handling(string s);
 
-int main(int argc, char* argv[]) {
+int main() {
 	WSADATA wsa;
 	WSAStartup(MAKEWORD(2, 2), &wsa);
 
@@ -23,11 +23,6 @@ int main(int argc, char* argv[]) {
 	int adr_sz;
 	int fd_max, str_len, fd_num;
 	char buf[BUF_SIZE];
-
-	if (argc != 2) {
-		cout << "Usage : " << argv[0] << endl;
-		exit(1);
-	}
 
 	serv_sock = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
 	memset(&serv_addr, 0, sizeof(serv_addr));
@@ -45,8 +40,15 @@ int main(int argc, char* argv[]) {
 		cpy_reads = reads;
 		timeout.tv_sec = 5;
 		timeout.tv_usec = 5000;
+		fd_num = select(0, &cpy_reads, NULL, NULL, &timeout);
+		if (fd_num == -1) {
+			break;
+		}
 
-		if ((fd_num = select(0, &cpy_reads, NULL, NULL, &timeout)) == -1) break;
+		if (fd_num == 0) {
+			cout << "select 5ÃÊ Áö³²" << endl;
+		}
+
 		if (fd_num == 0) continue;
 
 		for (int i = 0; i < cpy_reads.fd_count; i++) {
