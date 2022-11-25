@@ -27,5 +27,11 @@
     <ClCompile Include="clinet4.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Client5.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="select_client.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

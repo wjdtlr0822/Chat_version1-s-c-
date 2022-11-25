@@ -127,10 +127,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="echo_select_server.cpp" />
+    <ClCompile Include="select_server.cpp" />
     <ClCompile Include="server.cpp" />
     <ClCompile Include="server2.cpp" />
     <ClCompile Include="server3.cpp" />
     <ClCompile Include="server4.cpp" />
+    <ClCompile Include="server5.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

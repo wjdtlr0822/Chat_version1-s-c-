@@ -27,5 +27,14 @@
     <ClCompile Include="server4.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="server5.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="select_server.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="echo_select_server.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
